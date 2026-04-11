@@ -6,7 +6,7 @@ venv/
 .pytest_cache/
 reports/
 !reports/.gitkeep
-findings/
+/findings/
 *.egg-info/
 .coverage
 htmlcov/
