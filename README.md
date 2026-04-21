@@ -1,18 +1,17 @@
-# AWS cost-optimizer CLI
+# aws-cost-optimizer-cli
 
-A small, opinionated Python CLI that scans an AWS account and surfaces the
-**top cost leaks** a DevOps team can safely act on in one sprint:
+Python CLI that scans an AWS account and lists the obvious cost leaks
+most teams can clean up in a sprint:
 
-- **Idle EC2 instances** (avg CPU <5% over last 14 days)
-- **Unattached EBS volumes** (available, billed, never mounted)
-- **Old EBS snapshots** (>90 days, parent volume deleted)
-- **Unassociated Elastic IPs** ($0.005/h each, sneaky)
-- **Oversized RDS instances** (avg CPU <20% + connections <10% capacity)
-- **S3 buckets without lifecycle policies** (standard storage > 180 days)
-- **NAT gateways** in dev VPCs (expensive + often forgotten)
+- Idle EC2 instances (avg CPU <5% over last 14 days)
+- Unattached EBS volumes (billed, never mounted)
+- Old EBS snapshots (>90 days, parent volume deleted)
+- Unassociated Elastic IPs ($0.005/h each, easy to forget)
+- Oversized RDS (avg CPU <20% + connections <10% of max)
+- S3 buckets without lifecycle policies (standard storage >180 days)
+- NAT gateways in dev VPCs
 
-Output: a ranked CSV + Markdown report you can paste into a Jira ticket or
-a team Slack.
+Output is a ranked CSV + a Markdown summary you can paste into Jira or Slack.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -35,15 +34,14 @@ a team Slack.
 
 ## Why this exists
 
-Every AWS account I've inherited has ~15-25% of spend going to resources
-that nobody would miss. Most "AWS cost tools" charge for the obvious stuff
-(Compute Optimizer, Trusted Advisor Business tier, Vantage, CloudHealth).
-This CLI does the **80% of the value for free**, in ~800 lines of Python
-you can read in an afternoon.
+Every AWS account I've taken over had 15-25% of spend on things nobody was
+using. The commercial tools that flag this stuff (Compute Optimizer,
+Trusted Advisor Business, Vantage, CloudHealth) charge per account and the
+findings are usually the same handful of patterns. This CLI covers those
+patterns in ~800 lines of Python you can read in an afternoon.
 
-It's **read-only** by design. It never deletes, resizes, or modifies
-anything — it produces a report, and a human (or a follow-up Terraform PR)
-takes action.
+Read-only. It doesn't delete, resize or modify anything — it just writes
+a report. Actual cleanup is a separate Terraform PR, done by a human.
 
 ## Quickstart
 
@@ -88,13 +86,13 @@ minimal policy — about 25 actions across `ec2:Describe*`, `rds:Describe*`,
 
 See `docs/ARCHITECTURE.md` for:
 
-- How pricing estimates are computed (CSV of list-price per instance type,
-  updated quarterly — yes, we know Savings Plans & RIs distort this; the
-  report is a ranking signal, not an invoice)
-- Why each "finding" is a separate module (`src/findings/*.py`) so teams
-  can disable the ones that don't apply to their account shape
-- How the mock mode builds a synthetic account with known leaks so the
-  ranking / report code is testable without AWS
+- How the pricing estimates are computed. They use list price per instance
+  type. Savings Plans / RIs will distort the numbers — the report is a
+  ranking signal, not an invoice.
+- Why each finding is its own module under `src/findings/`. Teams can
+  disable the ones that don't apply to their account shape.
+- What the mock mode does (builds a synthetic account with known leaks
+  so you can demo / test without real AWS creds).
 
 ## Roadmap
 
