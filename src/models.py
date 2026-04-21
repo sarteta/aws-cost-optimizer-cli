@@ -8,7 +8,7 @@ to JSON via `dataclasses.asdict`.
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 
@@ -31,7 +31,9 @@ class Finding:
     est_monthly_usd: float
     action: str
     details: dict[str, Any] = field(default_factory=dict)
-    discovered_at: str = field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
+    discovered_at: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    )
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
