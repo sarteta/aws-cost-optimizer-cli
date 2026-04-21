@@ -13,24 +13,14 @@ most teams can clean up in a sprint:
 
 Output is a ranked CSV + a Markdown summary you can paste into Jira or Slack.
 
+```mermaid
+flowchart LR
+    A[AWS account<br/>IAM: ReadOnlyAccess] -- boto3 describe_* --> B[scan]
+    B --> C[findings/<br/>one JSON per scanner]
+    B --> D[reports/<br/>summary.md + actions.csv]
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│   AWS account              ── boto3 read-only ──►   optimizer.scan()    │
-│   (IAM: ReadOnlyAccess)                                   │              │
-│                                                           ▼              │
-│                                                     findings/            │
-│                                                      ├─ idle_ec2.json   │
-│                                                      ├─ orphan_ebs.json │
-│                                                      └─ …               │
-│                                                           │              │
-│                                                           ▼              │
-│                                                     reports/             │
-│                                                      ├─ summary.md      │
-│                                                      └─ actions.csv     │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+
+Lectura en español: [README.es.md](./README.es.md)
 
 ## Why this exists
 
