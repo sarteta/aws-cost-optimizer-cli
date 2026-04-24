@@ -58,7 +58,9 @@ python -m src.scan --mock --output reports/mock-demo
 
 ## Sample run (mock mode)
 
-Actual output from `python -m src.scan --mock --output reports/demo`:
+![demo](./examples/demo.png)
+
+Text output from `python -m src.scan --mock --output reports/demo`:
 
 ```
 Scanned 1 region(s) on account 123456789012
