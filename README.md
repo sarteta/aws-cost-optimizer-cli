@@ -1,5 +1,9 @@
 # aws-cost-optimizer-cli
 
+[![tests](https://github.com/sarteta/aws-cost-optimizer-cli/actions/workflows/tests.yml/badge.svg)](https://github.com/sarteta/aws-cost-optimizer-cli/actions/workflows/tests.yml)
+[![python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org)
+[![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
 Python CLI that scans an AWS account and lists the obvious cost leaks
 most teams can clean up in a sprint:
 
@@ -52,19 +56,31 @@ python -m src.scan \
 python -m src.scan --mock --output reports/mock-demo
 ```
 
-## What you get
+## Sample run (mock mode)
 
-A ranked `reports/<run>/actions.csv`:
+Actual output from `python -m src.scan --mock --output reports/demo`:
 
-| rank | resource          | id               | region    | est_monthly_usd | action               |
-|------|-------------------|------------------|-----------|-----------------|----------------------|
-| 1    | NAT gateway       | nat-0abc...      | us-west-2 | 32.40           | delete (dev VPC)     |
-| 2    | RDS db.m5.xlarge  | prod-legacy      | us-east-1 | 192.00          | downsize → m5.large  |
-| 3    | EC2 c5.2xlarge    | i-04a…bastion    | us-east-1 | 247.00          | stop (idle 18d)      |
-| 4    | EBS gp3 500GB     | vol-0abcdef      | us-east-1 | 40.00           | delete (unattached)  |
-| …    | …                 | …                | …         | …               | …                    |
+```
+Scanned 1 region(s) on account 123456789012
+Findings: 9   Est. monthly waste: $651.61
+Reports written to: reports/demo/
+```
 
-And a `reports/<run>/summary.md` you can paste anywhere.
+Top findings from `reports/demo/summary.md`:
+
+| rank | type              | id                      | est. $/mo | action                                                  |
+|------|-------------------|-------------------------|-----------|---------------------------------------------------------|
+| 1    | `rds_oversized`   | `prod-legacy`           | $249.66   | downsize db.m5.xlarge → db.m5.large (avg CPU 9.3%)      |
+| 2    | `ec2_idle`        | `i-bastion`             | $248.20   | stop or rightsize (avg CPU 0.8% over 14d)               |
+| 3    | `s3_no_lifecycle` | `old-backups-2022`      | $73.60    | add lifecycle policy (size ~3200 GB, no rules)          |
+| 4    | `ebs_orphan`      | `vol-orphan1`           | $40.00    | delete (unattached gp3 volume, 500 GB)                  |
+| 5    | `ebs_snapshot_old`| `snap-ancient`          | $12.50    | review & delete (age 540d, 250 GB)                      |
+| 6    | `s3_no_lifecycle` | `temp-exports-forgotten`| $10.35    | add lifecycle policy (size ~450 GB, no rules)           |
+| 7    | `ebs_orphan`      | `vol-orphan2`           | $10.00    | delete (unattached gp2 volume, 100 GB)                  |
+| 8    | `eip_unused`      | `3.210.2.2`             | $3.65     | release Elastic IP (not associated)                     |
+| 9    | `eip_unused`      | `3.210.3.3`             | $3.65     | release Elastic IP (not associated)                     |
+
+Full sample output is in [`examples/demo-report/`](./examples/demo-report/) — browse the CSV and Markdown to see the exact shape the tool produces without running anything.
 
 ## IAM permissions
 
