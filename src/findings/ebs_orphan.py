@@ -1,4 +1,4 @@
-"""Unattached EBS volumes — billed for storage even though nothing uses them."""
+"""Unattached EBS volumes -- billed for storage even though nothing uses them."""
 
 from __future__ import annotations
 

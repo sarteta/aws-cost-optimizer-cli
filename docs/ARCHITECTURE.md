@@ -57,7 +57,7 @@ For a more accurate number, pipe the CSV output into
 - Catch bugs in the report writer before they hit production accounts
 
 The mock data in `src/mock_data.py` is deliberately constructed so each
-finding module produces at least one hit — it's both a demo fixture and
+finding module produces at least one hit -- it's both a demo fixture and
 an integration test.
 
 ## Roadmap: why `--apply`?

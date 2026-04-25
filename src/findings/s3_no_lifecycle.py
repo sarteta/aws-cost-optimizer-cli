@@ -1,4 +1,4 @@
-"""S3 buckets without a lifecycle policy — likely leaking old objects on Standard."""
+"""S3 buckets without a lifecycle policy -- likely leaking old objects on Standard."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ def _bucket_size_gb(s3, bucket: str) -> float:
     """Mock path uses get_bucket_size; real boto3 doesn't have that method.
 
     For real accounts, size should come from a CloudWatch S3 BucketSizeBytes
-    metric. Keeping this simple here — if get_bucket_size is unavailable,
+    metric. Keeping this simple here -- if get_bucket_size is unavailable,
     return 0 so the finding is skipped (no false positives).
     """
     try:

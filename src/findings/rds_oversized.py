@@ -1,4 +1,4 @@
-"""Oversized RDS instances — low avg CPU over lookback window.
+"""Oversized RDS instances -- low avg CPU over lookback window.
 
 We don't check connection count here (would need Performance Insights or
 enhanced monitoring enabled on every instance). CPU alone gives a good

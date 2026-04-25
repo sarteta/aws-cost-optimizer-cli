@@ -1,4 +1,4 @@
-"""Report generation — CSV + Markdown."""
+"""Report generation -- CSV + Markdown."""
 
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ def _write_actions_csv(result: ScanResult, path: Path) -> None:
 
 def _write_summary_md(result: ScanResult, path: Path) -> None:
     lines: list[str] = []
-    lines.append("# AWS cost-optimizer — scan summary")
+    lines.append("# AWS cost-optimizer -- scan summary")
     lines.append("")
     lines.append(f"- **Account:** `{result.account_id or 'unknown'}`")
     lines.append(f"- **Regions:** {', '.join(result.regions)}")

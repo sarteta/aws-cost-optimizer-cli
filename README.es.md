@@ -1,7 +1,7 @@
 # aws-cost-optimizer-cli
 
 CLI en Python que escanea una cuenta AWS y lista las fugas de costo más
-comunes — las que cualquier equipo puede limpiar en un sprint:
+comunes -- las que cualquier equipo puede limpiar en un sprint:
 
 - EC2 idle (CPU promedio <5% en los últimos 14 días)
 - EBS desasociados (facturados, nunca montados)
@@ -21,7 +21,7 @@ recursos que nadie usaba. Las herramientas comerciales que detectan esto
 por cuenta y los hallazgos suelen ser los mismos. Este CLI cubre esos
 patrones en ~800 líneas de Python que leés en una tarde.
 
-Solo lectura. No borra, no redimensiona, no modifica nada — genera un
+Solo lectura. No borra, no redimensiona, no modifica nada -- genera un
 reporte y la limpieza real la hace una persona en un PR de Terraform aparte.
 
 ## Quickstart
@@ -39,7 +39,7 @@ python -m src.scan \
   --regions us-east-1,us-west-2,eu-west-1 \
   --output reports/2026-04-prod
 
-# Mock mode — sin cuenta AWS, útil para demos / CI
+# Mock mode -- sin cuenta AWS, útil para demos / CI
 python -m src.scan --mock --output reports/mock-demo
 ```
 
@@ -54,7 +54,7 @@ Solo lectura. La política `iam/cost-optimizer-readonly.json` es mínima:
 Ver `docs/ARCHITECTURE.md` para:
 
 - Cómo se estiman los precios (usa list-price por tipo de instancia;
-  Savings Plans / RIs distorsionan los números — el reporte es señal de
+  Savings Plans / RIs distorsionan los números -- el reporte es señal de
   ranking, no una factura).
 - Por qué cada finding es su propio módulo bajo `src/findings/`. Los
   equipos pueden desactivar los que no apliquen a su cuenta.

@@ -1,4 +1,4 @@
-# AWS cost-optimizer — scan summary
+# AWS cost-optimizer -- scan summary
 
 - **Account:** `123456789012`
 - **Regions:** us-east-1

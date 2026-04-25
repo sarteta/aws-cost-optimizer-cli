@@ -28,7 +28,7 @@ def build_mock_account() -> dict:
             {"InstanceId": "i-bastion", "InstanceType": "c5.2xlarge",
              "State": {"Name": "running"}, "LaunchTime": _iso(800),
              "Tags": [{"Key": "Name", "Value": "legacy-bastion"}]},
-            # Stopped — we ignore these
+            # Stopped -- we ignore these
             {"InstanceId": "i-stopped", "InstanceType": "m5.large",
              "State": {"Name": "stopped"}, "LaunchTime": _iso(90),
              "Tags": []},
@@ -41,7 +41,7 @@ def build_mock_account() -> dict:
         ],
     }
 
-    # CloudWatch CPU metrics — key = (region, instance_id)
+    # CloudWatch CPU metrics -- key = (region, instance_id)
     cw_cpu: dict[tuple[str, str], list[dict]] = {
         ("us-east-1", "i-prod001"): [{"Average": 38.0}, {"Average": 42.0}, {"Average": 45.0}],
         ("us-east-1", "i-bastion"): [{"Average": 0.4}, {"Average": 0.8}, {"Average": 1.1}],

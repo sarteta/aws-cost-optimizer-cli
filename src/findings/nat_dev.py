@@ -1,4 +1,4 @@
-"""NAT gateways in dev/staging VPCs — often forgotten, ~$32-40/mo each."""
+"""NAT gateways in dev/staging VPCs -- often forgotten, ~$32-40/mo each."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def scan(client, region: str) -> list[Finding]:
             resource_id=gw["NatGatewayId"],
             region=region,
             est_monthly_usd=nat_monthly(region),
-            action=f"evaluate removal — non-prod VPC (Env={env})",
+            action=f"evaluate removal -- non-prod VPC (Env={env})",
             details={"env": env},
         ))
     return findings

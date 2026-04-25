@@ -23,7 +23,7 @@ def run_scan(*, mock: bool, profile: str | None, regions: list[str],
 
     for region in regions:
         for scanner in ALL_SCANNERS:
-            # S3 findings only run once (first region) — S3 listing is global
+            # S3 findings only run once (first region) -- S3 listing is global
             if scanner is s3_no_lifecycle and region != regions[0]:
                 continue
             try:

@@ -1,4 +1,4 @@
-"""Unassociated Elastic IPs — charged hourly while idle."""
+"""Unassociated Elastic IPs -- charged hourly while idle."""
 
 from __future__ import annotations
 

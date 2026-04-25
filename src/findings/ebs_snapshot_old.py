@@ -1,6 +1,6 @@
 """Old EBS snapshots (>90 days).
 
-We flag ALL snapshots older than the threshold — the action is "review &
+We flag ALL snapshots older than the threshold -- the action is "review &
 delete if parent volume is gone or backup policy doesn't require it."
 """
 

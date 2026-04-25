@@ -1,6 +1,6 @@
 """Data models for the scanner output.
 
-We keep findings as plain dataclasses (no ORM / no persistence layer —
+We keep findings as plain dataclasses (no ORM / no persistence layer --
 reports are regenerated from a fresh scan every time) and serialize them
 to JSON via `dataclasses.asdict`.
 """
@@ -17,7 +17,7 @@ class Finding:
     """A single cost-leak finding.
 
     `resource_type` is a short string like ``ec2_idle``, ``ebs_orphan``,
-    ``rds_oversized`` — it maps 1:1 to the module under
+    ``rds_oversized`` -- it maps 1:1 to the module under
     ``src/findings/`` that produced it.
 
     `est_monthly_usd` is a best-effort list-price estimate. It does NOT

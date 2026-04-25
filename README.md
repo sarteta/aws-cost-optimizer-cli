@@ -24,18 +24,10 @@ flowchart LR
     B --> D[reports/<br/>summary.md + actions.csv]
 ```
 
+Read-only. The CLI doesn't delete, resize or modify anything, it writes
+a report. Actual cleanup is a separate Terraform PR done by a human.
+
 Lectura en español: [README.es.md](./README.es.md)
-
-## Why this exists
-
-Every AWS account I've taken over had 15-25% of spend on things nobody was
-using. The commercial tools that flag this stuff (Compute Optimizer,
-Trusted Advisor Business, Vantage, CloudHealth) charge per account and the
-findings are usually the same handful of patterns. This CLI covers those
-patterns in ~800 lines of Python you can read in an afternoon.
-
-Read-only. It doesn't delete, resize or modify anything — it just writes
-a report. Actual cleanup is a separate Terraform PR, done by a human.
 
 ## Quickstart
 
@@ -52,7 +44,7 @@ python -m src.scan \
   --regions us-east-1,us-west-2,eu-west-1 \
   --output reports/2026-04-prod
 
-# Mock mode — no AWS account needed, useful for demos / CI
+# Mock mode -- no AWS account needed, useful for demos / CI
 python -m src.scan --mock --output reports/mock-demo
 ```
 
@@ -82,12 +74,12 @@ Top findings from `reports/demo/summary.md`:
 | 8    | `eip_unused`      | `3.210.2.2`             | $3.65     | release Elastic IP (not associated)                     |
 | 9    | `eip_unused`      | `3.210.3.3`             | $3.65     | release Elastic IP (not associated)                     |
 
-Full sample output is in [`examples/demo-report/`](./examples/demo-report/) — browse the CSV and Markdown to see the exact shape the tool produces without running anything.
+Full sample output is in [`examples/demo-report/`](./examples/demo-report/) -- browse the CSV and Markdown to see the exact shape the tool produces without running anything.
 
 ## IAM permissions
 
 The CLI is read-only. The included `iam/cost-optimizer-readonly.json` is a
-minimal policy — about 25 actions across `ec2:Describe*`, `rds:Describe*`,
+minimal policy -- about 25 actions across `ec2:Describe*`, `rds:Describe*`,
 `s3:GetBucket*`, `ce:GetCostAndUsage`, `cloudwatch:GetMetricStatistics`.
 
 ## Design notes
@@ -95,7 +87,7 @@ minimal policy — about 25 actions across `ec2:Describe*`, `rds:Describe*`,
 See `docs/ARCHITECTURE.md` for:
 
 - How the pricing estimates are computed. They use list price per instance
-  type. Savings Plans / RIs will distort the numbers — the report is a
+  type. Savings Plans / RIs will distort the numbers -- the report is a
   ranking signal, not an invoice.
 - Why each finding is its own module under `src/findings/`. Teams can
   disable the ones that don't apply to their account shape.

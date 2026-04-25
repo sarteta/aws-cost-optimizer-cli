@@ -2,7 +2,7 @@
 
 This is deliberately small and manually curated. The AWS Pricing API
 (`pricing.us-east-1.amazonaws.com`) returns 500+ MB of JSON and requires
-its own credentials — overkill for a ranking tool.
+its own credentials -- overkill for a ranking tool.
 
 We cover:
 - EC2 on-demand Linux hourly rates for the instance families we see most
@@ -54,7 +54,7 @@ EBS_GB_MONTH: dict[str, float] = {
 }
 
 # -------- Misc --------
-NAT_GATEWAY_HOURLY = 0.045       # plus data processing — we ignore data here
+NAT_GATEWAY_HOURLY = 0.045       # plus data processing -- we ignore data here
 ELASTIC_IP_UNUSED_HOURLY = 0.005
 S3_STANDARD_GB_MONTH = 0.023
 SNAPSHOT_GB_MONTH = 0.05
@@ -76,7 +76,7 @@ def region_multiplier(region: str) -> float:
 def ec2_monthly(instance_type: str, region: str) -> float:
     base = EC2_HOURLY.get(instance_type)
     if base is None:
-        # Unknown family — return a safe mid-tier estimate so rank isn't lost
+        # Unknown family -- return a safe mid-tier estimate so rank isn't lost
         base = 0.10
     return round(base * HOURS_PER_MONTH * region_multiplier(region), 2)
 
