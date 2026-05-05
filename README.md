@@ -103,6 +103,10 @@ See `docs/ARCHITECTURE.md` for:
 - [ ] Compute Savings Plans coverage estimator
 - [ ] Lambda cold-resource finder (functions not invoked in 60+ days)
 
+## Related projects
+
+- [`mcp-aws-cost-doctor`](https://github.com/sarteta/mcp-aws-cost-doctor) — same scanners exposed as MCP tools, so an AI agent like Claude can call them mid-conversation. Use the CLI for CI / scheduled scans, the MCP server for ad-hoc agentic audits.
+
 ## License
 
 MIT © 2026 Santiago Arteta
